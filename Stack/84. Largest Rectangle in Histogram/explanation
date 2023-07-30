@@ -1,0 +1,86 @@
+Sure, let's go through the example step by step to see how the code updates the values and arrives at the output of 10 for the given input `heights = [2, 1, 5, 6, 2, 3]`.
+
+Input: heights = [2, 1, 5, 6, 2, 3]
+Output: 10
+
+To visualize the process, let's use a step-by-step breakdown:
+
+1. Initialize variables:
+   - `area = 0` (max area of the rectangle found so far)
+   - `n = 6` (number of elements in `heights`)
+   - `start = 0` (variable to keep track of the starting index of the current rectangle)
+   - `stack = []` (an empty stack to store pairs of starting index and height)
+
+2. Process element at index 0 (height = 2):
+
+   - `stack = []` (empty stack, so we just push the current height and index)
+     `stack = [(0, 2)]`
+
+3. Process element at index 1 (height = 1):
+
+   - Since the height at index 1 (1) is less than the height at the top of the stack (2), we need to process the elements in the stack to find the maximum rectangle area they can form.
+
+   - Pop the top element from the stack (height = 2, index = 0):
+
+     - Calculate the area of the rectangle with height 2 and width (current index - index from the pair): 2 * (1 - 0) = 2
+     - Update the `area` to 2 (since it's greater than the previous value of 0).
+
+   - The stack is now empty.
+
+   - Push the current height and index to the stack:
+     `stack = [(1, 1)]`
+
+4. Process element at index 2 (height = 5):
+
+   - `stack = [(1, 1)]` (height 5 is greater than the height at the top of the stack, so we push it)
+     `stack = [(1, 1), (2, 5)]`
+
+5. Process element at index 3 (height = 6):
+
+   - `stack = [(1, 1), (2, 5)]` (height 6 is greater than the height at the top of the stack, so we push it)
+     `stack = [(1, 1), (2, 5), (3, 6)]`
+
+6. Process element at index 4 (height = 2):
+
+   - Since the height at index 4 (2) is less than the height at the top of the stack (6), we need to process the elements in the stack to find the maximum rectangle area they can form.
+
+   - Pop the top element from the stack (height = 6, index = 3):
+
+     - Calculate the area of the rectangle with height 6 and width (current index - index from the pair): 6 * (4 - 3) = 6
+     - Update the `area` to 6 (since it's greater than the previous value of 2).
+
+   - Pop the next element from the stack (height = 5, index = 2):
+
+     - Calculate the area of the rectangle with height 5 and width (current index - index from the pair): 5 * (4 - 2) = 10
+     - Update the `area` to 10 (since it's greater than the previous value of 6).
+
+   - The height at index 1 (1) is still less than the current height (2), so we update the `start` variable to 1.
+
+   - Push the current height and index to the stack:
+     `stack = [(1, 1), (4, 2)]`
+
+7. Process element at index 5 (height = 3):
+
+   - `stack = [(1, 1), (4, 2)]` (height 3 is greater than the height at the top of the stack, so we push it)
+     `stack = [(1, 1), (4, 2), (5, 3)]`
+
+8. There are no more elements to process. Now, we need to process the remaining elements in the stack to find their maximum rectangle areas.
+
+   - Pop the top element from the stack (height = 3, index = 5):
+
+     - Calculate the area of the rectangle with height 3 and width (number of elements - index from the pair): 3 * (6 - 5) = 3
+     - Update the `area` to 10 (since it's greater than the previous value of 10).
+
+   - Pop the next element from the stack (height = 2, index = 4):
+
+     - Calculate the area of the rectangle with height 2 and width (number of elements - index from the pair): 2 * (6 - 4) = 4
+     - Update the `area` to 10 (since it's greater than the previous value of 10).
+
+   - Pop the last element from the stack (height = 1, index = 1):
+
+     - Calculate the area of the rectangle with height 1 and width (number of elements - index from the pair): 1 * (6 - 1) = 5
+     - Update the `area` to 10 (since it's greater than the previous value of 10).
+
+9. The stack is now empty, and the `area` variable holds the maximum rectangle area, which is 10.
+
+So, the code successfully finds the largest rectangle area in the histogram, which is 10 for the given input `heights = [2, 1, 5, 6, 2, 3]`.
