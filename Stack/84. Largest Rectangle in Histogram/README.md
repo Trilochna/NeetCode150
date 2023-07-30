@@ -9,3 +9,5 @@ Constraints:
 1 <= heights.length <= 105
 0 <= heights[i] <= 104
 
+
+REFER : [EXPLANATION VIDEO](https://www.youtube.com/watch?v=zx5Sw9130L0)
