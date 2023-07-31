@@ -1,0 +1,21 @@
+Explanation:
+
+The function isPalindrome takes a single argument s, which is the input string we want to check for palindromes.
+
+Two pointers, i and j, are initialized to the start and end of the string, respectively.
+
+The while loop runs until the two pointers meet or cross each other. This loop is the core of the palindrome checking algorithm.
+
+Inside the loop, the characters at positions i and j are obtained using s.charAt(i) and s.charAt(j).
+
+The code checks if the character at position i is not a letter or digit using Character.isLetterOrDigit(start). If it's not, the i pointer is moved one step to the right, effectively skipping this character in the palindrome check.
+
+Similarly, the code checks if the character at position j is not a letter or digit. If it's not, the j pointer is moved one step to the left, effectively skipping this character in the palindrome check.
+
+If both characters at positions i and j are letters or digits, the code compares them, ignoring case (converting them to lowercase using Character.toLowerCase()).
+
+If the characters are not equal, the function immediately returns false, indicating that the string is not a palindrome.
+
+If the characters are equal, the loop continues to the next iteration by moving the i pointer one step to the right and the j pointer one step to the left.
+
+If the loop completes without finding any mismatched characters, it means the string is a palindrome, and the function returns true.
