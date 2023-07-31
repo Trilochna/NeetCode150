@@ -1,0 +1,45 @@
+Sure! I'll be glad to explain the working of the given Java code that solves the "Two Sum II - Input array is sorted" problem.
+
+Problem statement: Given an array of integers `numbers` that is already sorted in ascending order, find two numbers such that they add up to a specific target number `target`. The function should return an array with the indices of the two numbers in the input array.
+
+Let's go through the code step-by-step:
+
+1. Method Signature: `public int[] twoSum(int[] numbers, int target)`
+   - The method `twoSum` takes two parameters:
+     - `numbers`: An array of integers that is sorted in ascending order.
+     - `target`: The target sum that we need to find using two elements from the array.
+
+2. Variables Initialization:
+   - `a_pointer`: This variable is used to keep track of the first element of the potential pair (initialized to the start of the array, which is 0).
+   - `b_pointer`: This variable is used to keep track of the second element of the potential pair (initialized to the end of the array, which is `numbers.length - 1`).
+   - `num_a`: This variable will store the value of the element at the index `a_pointer`.
+   - `num_b`: This variable will store the value of the element at the index `b_pointer`.
+
+3. Main Loop:
+   The `while` loop iterates as long as `a_pointer` is less than `b_pointer`. The loop's objective is to find the two elements whose sum equals the `target`.
+
+4. Check Sum and Update Pointers:
+   Inside the loop, the code checks the sum of `num_a` and `num_b`:
+   - If the sum equals `target`, it means we have found the pair of elements that add up to the target. The loop is then terminated using the `break;` statement.
+   - If the sum is less than `target`, it means the current pair is smaller than the target. In this case, we need to try a larger value for the first element, so we increment `a_pointer`.
+   - If the sum is greater than `target`, it means the current pair is larger than the target. In this case, we need to try a smaller value for the second element, so we decrement `b_pointer`.
+
+5. Return the Result:
+   Once the loop is exited, we have found the two elements whose sum equals the target. We create a new integer array containing the indices of these elements and return it as the result. Since the problem assumes that the input array is one-indexed (indices start from 1), we add 1 to both `a_pointer` and `b_pointer` before creating the result array.
+
+Here's how the function works with an example:
+```java
+int[] numbers = { 2, 7, 11, 15 };
+int target = 9;
+
+Solution solution = new Solution();
+int[] result = solution.twoSum(numbers, target);
+System.out.println("Indices of the elements that add up to the target: " + result[0] + ", " + result[1]);
+```
+Output:
+```
+Indices of the elements that add up to the target: 1, 2
+```
+In this example, the pair of elements at indices 1 and 2 (2 and 7) add up to the target 9.
+
+The time complexity of this solution is O(n) since we only iterate through the array once. The space complexity is O(1) as we are using a constant amount of additional space.
