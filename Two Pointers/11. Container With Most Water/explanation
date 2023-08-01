@@ -1,0 +1,28 @@
+
+This code aims to find the maximum area of water that can be trapped between two vertical lines represented by the given array `height`. The array `height` contains the heights of the lines at different positions, and the indices of the array represent the positions on the x-axis.
+
+Let's go through the code step by step:
+
+1. The method `maxArea` takes an array `height` as input and returns an integer, which is the maximum area of water that can be trapped.
+
+2. `result` is initialized to 0, which will eventually hold the maximum area found.
+
+3. `left` is initialized to 0, representing the left pointer of the array, and `right` is initialized to `height.length - 1`, representing the right pointer of the array. These pointers will be used to calculate the width of the container.
+
+4. The code uses a `while` loop that runs as long as `left` is less than `right`. The loop iterates through the array to calculate the areas between different pairs of lines and updates `result` to hold the maximum area found so far.
+
+5. Within the loop, `area` is calculated as the width (the difference between `right` and `left`) multiplied by the minimum height between the lines represented by `height[left]` and `height[right]`. This gives us the area of the container formed by the two lines.
+
+6. `result` is updated by taking the maximum value between the current `result` and the newly calculated `area`. This way, `result` always holds the maximum area seen during the iterations.
+
+7. The code then checks which of the two pointers (`left` or `right`) has a smaller height. The pointer with the smaller height is moved towards the center of the array because keeping the larger height fixed and moving the smaller one could potentially lead to a larger area. The reasoning behind this is that moving the pointer with the larger height will only decrease the width, which will result in a smaller area, whereas moving the pointer with the smaller height might lead to a larger area as we may find a taller line.
+
+8. If `height[left]` is less than `height[right]`, then `left` is incremented (moved to the right) since moving `left` inward may lead to a larger height.
+
+9. If `height[right]` is less than or equal to `height[left]`, then `right` is decremented (moved to the left) since moving `right` inward may lead to a larger height or at least a better chance of finding a larger height.
+
+10. The loop continues until `left` is no longer less than `right`, at which point we have checked all possible combinations of lines, and the algorithm returns the final `result`, which holds the maximum area found.
+
+The time complexity of this algorithm is O(n) since we are iterating through the array once with two pointers, and the space complexity is O(1) as we are using only a constant amount of extra space regardless of the input size.
+
+In summary, the code efficiently solves the "Container With Most Water" problem, finding the maximum area that can be trapped between two vertical lines in the given array.
