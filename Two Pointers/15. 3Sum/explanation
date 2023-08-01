@@ -1,0 +1,31 @@
+Explanation:
+
+The threeSum method takes an array nums as input and returns a list of triplets whose sum equals 0.
+
+First, the input array nums is sorted in ascending order using Arrays.sort(nums). Sorting is necessary for the two-pointer technique to work effectively.
+
+A LinkedList named sol is created to store the solutions (triplets).
+
+The code uses a for loop to iterate through the array from the beginning until the third-to-last element. Since we are finding triplets, we don't need to go beyond the third-to-last element because there won't be enough elements after that to form a triplet.
+
+Inside the loop, we check for duplicate elements by using the condition if (i == 0 || (i > 0 && nums[i] != nums[i - 1])). This condition ensures that we skip duplicate elements to avoid duplicate triplets in the result.
+
+The target variable is calculated as 0 - nums[i], which is the value the remaining two elements in the triplet should sum up to in order to achieve a total sum of 0.
+
+Two pointers left and right are initialized. The left pointer points to the element next to nums[i], and the right pointer points to the last element in the array.
+
+The code uses the two-pointer technique to find the triplet. The while (left < right) loop keeps running until the two pointers meet each other.
+
+Inside the loop, it checks if the sum of the elements at positions left and right is equal to the target. If it's equal, we have found a triplet, and we add it to the result list sol.
+
+After finding a triplet, we skip any duplicate elements from both the left and right sides to avoid duplicate triplets in the result.
+
+The left and right pointers are moved towards each other (left++ and right--) to explore other possible combinations.
+
+If the sum of elements at left and right is greater than the target, we decrement the right pointer to reduce the sum. If it's less than the target, we increment the left pointer to increase the sum.
+
+Once the loop finishes, all possible triplets have been found, and the sol list contains all the unique triplets whose sum is 0.
+
+Finally, the method returns the list of triplets sol.
+
+The time complexity of this algorithm is O(n^2) because the outer loop runs for n-2 iterations, and the inner while loop runs in O(n) time for each iteration of the outer loop. The sorting step takes O(n log n) time. Thus, the overall time complexity is dominated by the two-pointer technique.
