@@ -1,0 +1,42 @@
+
+
+The code aims to find the length of the longest substring without repeating characters in a given input string `s`.
+
+Let's go through the code step by step:
+
+1. We have a method called `lengthOfLongestSubstring` that takes a single parameter `s`, which is the input string for which we need to find the length of the longest substring without repeating characters.
+
+2. The method initializes an empty `ArrayList` called `substringL`, which will be used to store the characters of the current substring being processed.
+
+3. It also initializes an integer variable `largestlength` to keep track of the length of the longest substring found so far.
+
+4. The code then starts iterating over the characters of the input string `s` using a `for` loop. The loop variable `right` is used to indicate the right pointer of the current substring being processed.
+
+5. For each character at index `right`, the code checks if the character is already present in the `substringL` list using the `contains` method. If the character is not already present, it means we can add it to the current substring.
+
+6. If the character is already present in the `substringL`, it indicates that we have a repeating character. So, the code needs to adjust the substring and remove characters that are before the first occurrence of the repeating character. It does the following steps:
+   a. Find the index of the repeating character in the `substringL` list using `indexOf`.
+   b. Remove the character at that index from the `substringL` list using `remove`.
+   c. If the index is greater than 0, it means there are some characters before the first occurrence of the repeating character. So, we remove those characters from the `substringL` list using `subList(0, index).clear()`.
+
+7. After adjusting the `substringL` list to remove repeating characters, the code adds the current character to the `substringL` list.
+
+8. At each iteration, the code updates the `largestlength` to keep track of the maximum length seen so far.
+
+9. Once the loop finishes, the method returns the `largestlength`, which will be the length of the longest substring without repeating characters.
+
+Let's take an example to understand the code better:
+
+Example:
+Suppose we have the input string `s = "abcabcbb"`.
+1. For `right = 0`, `substringL = ['a']`, `largestlength = 1`.
+2. For `right = 1`, `substringL = ['a', 'b']`, `largestlength = 2`.
+3. For `right = 2`, `substringL = ['a', 'b', 'c']`, `largestlength = 3`.
+4. For `right = 3`, since `'a'` already exists in `substringL`, we remove elements before `'a'`, so `substringL = ['b', 'c']`, `largestlength = 3`.
+5. For `right = 4`, since `'b'` already exists in `substringL`, we remove elements before `'b'`, so `substringL = ['c']`, `largestlength = 3`.
+6. For `right = 5`, since `'c'` already exists in `substringL`, we remove elements before `'c'`, so `substringL = []`, `largestlength = 3`.
+7. For `right = 6`, `substringL = ['b']`, `largestlength = 3`.
+
+The final result is `largestlength = 3`, which is the correct answer as "abc" is the longest substring without repeating characters in the input string.
+
+That's how the code works! It efficiently finds the length of the longest substring without repeating characters using the sliding window technique and an ArrayList to keep track of the current substring.
