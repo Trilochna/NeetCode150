@@ -1,0 +1,53 @@
+
+```java
+class Solution {
+    public boolean checkInclusion(String s1, String s2) {
+```
+
+This is the start of the class and the method definition. The method `checkInclusion` takes two input parameters: `s1`, which is a String, and `s2`, which is also a String. It returns a boolean value (`true` or `false`) indicating whether `s1` is a permutation of a substring of `s2`.
+
+```java
+        if(s1.length() > s2.length() || s2.length() == 0) return false;
+        if(s1.length() == 0) return true;
+```
+
+These lines are initial checks to see if the input strings `s1` and `s2` meet certain conditions. If `s1` is longer than `s2` or `s2` is an empty string, it immediately returns `false` because there is no way `s1` can be a permutation of `s2` in such cases. If `s1` is an empty string, it means it is always a permutation of an empty substring of `s2`, so it returns `true`.
+
+```java
+        int[] s1Count = new int[26];
+        int[] s2Count = new int[26];
+```
+
+Here, two arrays `s1Count` and `s2Count` of integers are created, each having a length of 26. These arrays will be used to store the frequency count of characters in `s1` and `s2`. The array size is 26 because we are assuming the strings contain only lowercase English alphabets (a-z).
+
+```java
+        for(int i = 0; i < s1.length(); i++){
+            s1Count[s1.charAt(i) - 'a']++;
+            s2Count[s2.charAt(i) - 'a']++;
+        }
+```
+
+This `for` loop iterates through the characters of `s1` and `s2`, and it calculates the frequency count of characters for both strings and stores them in the respective arrays `s1Count` and `s2Count`. For example, if the character is `'a'`, it will be stored in index 0 of the array, if it's `'b'`, it will be stored in index 1, and so on. The `- 'a'` part is used to map the characters to the corresponding index in the array. For instance, if `s1.charAt(i)` is `'b'`, then `'b' - 'a'` will be equal to 1, so it will be stored in `s1Count[1]`.
+
+```java
+        for(int i = s1.length(); i < s2.length(); i++){
+            if(Arrays.equals(s1Count, s2Count)) return true;
+            s2Count[s2.charAt(i - s1.length()) - 'a']--;
+            s2Count[s2.charAt(i) - 'a']++;
+        }
+```
+
+In this `for` loop, we are sliding a window of size `s1.length()` over `s2`. The window starts at index 0 and ends at `s1.length() - 1`. We compare the character frequency arrays `s1Count` and `s2Count` at each window position using `Arrays.equals` method. If they are equal, it means `s1` is a permutation of the current window in `s2`, and we return `true`.
+
+Next, we update the `s2Count` array for the next window position. We decrease the count of the character that is no longer part of the window (i.e., the character at `i - s1.length()`) and increase the count of the character that becomes part of the window (i.e., the character at `i`).
+ 
+```java
+        if(Arrays.equals(s1Count, s2Count)) return true;
+        else return false;
+    }
+}
+```
+
+Finally, after the loop, we perform one more check to compare `s1Count` and `s2Count` to handle the last window of `s2`. If they are equal, we return `true`, meaning `s1` is a permutation of a substring of `s2`. Otherwise, we return `false`.
+
+In summary, the code checks if `s1` is a permutation of any substring of `s2` by using two character frequency arrays (`s1Count` and `s2Count`) and sliding a window over `s2`. If the frequency arrays match at any window position, it returns `true`, otherwise `false`.
