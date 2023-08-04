@@ -1,0 +1,119 @@
+
+```java
+class Solution {
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        int[] output = new int[nums.length - k + 1];
+        int left = 0;
+        int right;
+
+        Deque<Integer> deque = new ArrayDeque<>();
+```
+
+- The code starts with defining a class named `Solution`, which contains a method `maxSlidingWindow`.
+- `maxSlidingWindow` takes two parameters: an array of integers `nums` and an integer `k`.
+- It initializes an integer array called `output`, which will store the maximum elements in each sliding window.
+- It initializes two integer variables, `left` and `right`, which will be used to define the sliding window.
+- It declares a `Deque` (Double-ended queue) named `deque` using `ArrayDeque`, which will be used to store indices of elements within the sliding window.
+
+```java
+        for(right = 0; right < nums.length; right++){
+            if(!deque.isEmpty() && deque.peekFirst() < right - k + 1){
+                deque.pollFirst();
+            }
+
+            while(!deque.isEmpty() && nums[right] > nums[deque.peekLast()]){
+                deque.pollLast();
+            }
+
+            deque.offer(right);
+
+            if(right >= k - 1){
+                output[left++] = nums[deque.peekFirst()];
+            }
+        }
+```
+
+- The code then enters a `for` loop, which starts with `right = 0` and goes until `right` reaches the end of the `nums` array.
+- Inside the loop, the code first checks if the `deque` is not empty and if the index at the front of the `deque` is outside the current sliding window. If so, it removes the front element from the `deque`, as it is no longer relevant to the current window.
+- Next, it enters a `while` loop that repeatedly checks if the `deque` is not empty and the current element at index `right` is greater than the element at the back of the `deque`. If so, it means the current element is the maximum for the current window, so it removes elements from the back of the `deque` until the current element is no longer greater.
+- Then, the current `right` index is added to the `deque`, as it represents a candidate maximum element for the window.
+- Once `right` reaches a position where the window size `k` has been reached or exceeded (`right >= k - 1`), it means the window is valid, and we can start storing the maximum element in the `output` array. The maximum element for the current window is at the front of the `deque`, so it is assigned to the `output` array at the current `left` index. After that, `left` is incremented to prepare for the next window.
+
+```java
+        return output;
+    }
+}
+```
+
+- Finally, after the loop ends, the `output` array containing the maximum elements for each sliding window is returned.
+
+Let's now implement the code on the provided example: `Input: nums = [1,3,-1,-3,5,3,6,7], k = 3`
+
+1. Initialize the `output` array with `length - k + 1 = 8 - 3 + 1 = 6` elements.
+2. Initialize `left = 0` and `right = 0`.
+3. At the first iteration, the window is `[1, 3, -1]`, and the maximum element is `3`, so `output[0] = 3`.
+4. Move the window to the right. The window is now `[3, -1, -3]`, and the maximum element is still `3`, so `output[1] = 3`.
+5. Move the window to the right. The window is now `[-1, -3, 5]`, and the maximum element is `5`, so `output[2] = 5`.
+6. Continue the process until the end of the array is reached.
+
+Final `output`: `[3, 3, 5, 5, 6, 7]`
+
+In the provided example, the code uses a `Deque<Integer>` named `deque` to efficiently keep track of the elements within the sliding window and find the maximum element efficiently. Let's go through the example step by step to understand how elements are added and removed from the `deque`.
+
+Input: `nums = [1, 3, -1, -3, 5, 3, 6, 7]`, `k = 3`
+
+1. Initialize the `deque` as an empty `Deque<Integer>`.
+
+   deque: `[]`
+
+2. Start the loop:
+
+   - Iteration 1:
+     - Add index `0` (element `1`) to the `deque`.
+     - Current window: `[1]`
+     deque: `[0]`
+
+   - Iteration 2:
+     - Remove the index `0` (element `1`) from the `deque` because it is no longer within the window (current window: `[1, 3]`).
+     - Add index `1` (element `3`) to the `deque`.
+     - Current window: `[1, 3]`
+     deque: `[1]`
+
+   - Iteration 3:
+     - Remove index `1` (element `3`) from the `deque` because it is no longer within the window (current window: `[1, 3, -1]`).
+     - Add index `2` (element `-1`) to the `deque`.
+     - Current window: `[1, 3, -1]`
+     deque: `[2]`
+
+   - Iteration 4:
+     - Remove index `2` (element `-1`) from the `deque` because it is no longer within the window (current window: `[3, -1, -3]`).
+     - Add index `3` (element `-3`) to the `deque`.
+     - Current window: `[3, -1, -3]`
+     deque: `[3]`
+
+   - Iteration 5:
+     - Remove index `3` (element `-3`) from the `deque` because it is no longer within the window (current window: `[-1, -3, 5]`).
+     - Add index `4` (element `5`) to the `deque`.
+     - Current window: `[-1, -3, 5]`
+     deque: `[4]`
+
+   - Iteration 6:
+     - Add index `5` (element `3`) to the `deque`.
+     - Current window: `[-3, 5, 3]`
+     deque: `[4, 5]`
+
+   - Iteration 7:
+     - Add index `6` (element `6`) to the `deque`.
+     - Current window: `[5, 3, 6]`
+     deque: `[4, 5, 6]`
+
+   - Iteration 8:
+     - Add index `7` (element `7`) to the `deque`.
+     - Current window: `[3, 6, 7]`
+     deque: `[4, 5, 6, 7]`
+
+3. At each step, after adding the element to the `deque`, we check if the window size `k` has been reached or exceeded (`right >= k - 1`). If so, it means the window is valid, and we can start storing the maximum element in the `output` array. The maximum element for the current window is at the front of the `deque`, so it is assigned to the `output` array at the current `left` index. After that, `left` is incremented to prepare for the next window.
+
+4. The final `output` array will contain the maximum elements for each sliding window:
+
+   Output: `[3, 3, 5, 5, 6, 7]`
