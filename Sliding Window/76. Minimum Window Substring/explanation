@@ -1,0 +1,76 @@
+
+```java
+class Solution {
+```
+This line declares a class named `Solution`. This class contains a method `minWindow` that takes two string arguments `s` and `t` and returns a string.
+
+```java
+    //sliding window
+```
+This is a comment providing a brief description of the approach used in the `minWindow` method, which is the sliding window algorithm.
+
+```java
+    public String minWindow(String s, String t) {
+```
+This line defines the `minWindow` method, which takes two strings `s` and `t` as input and returns a string as output.
+
+```java
+        HashMap<Character, Integer> map = new HashMap<>();
+```
+Here, a `HashMap` named `map` is declared to keep track of the characters from string `t` and their frequencies.
+
+```java
+        for (char x : t.toCharArray()) {
+            map.put(x, map.getOrDefault(x, 0) + 1);
+        }
+```
+This loop iterates through each character `x` in string `t` using the enhanced `for` loop. For each character, it checks if the character is already present in the `map`. If it is present, it increments its frequency by 1. If the character is not in the `map`, it sets its frequency to 1 using the `getOrDefault` method.
+
+```java
+        int matched = 0;
+        int start = 0;
+        int minLen = s.length() + 1;
+        int subStr = 0;
+```
+Several variables are declared here: 
+- `matched`: It keeps track of the number of characters in string `s` that match the characters and frequencies in the `map`.
+- `start`: It represents the starting index of the current window.
+- `minLen`: It stores the minimum length of the substring that contains all the characters of string `t`.
+- `subStr`: It holds the starting index of the minimum length substring.
+
+```java
+        for (int endWindow = 0; endWindow < s.length(); endWindow++) {
+            char right = s.charAt(endWindow);
+            if (map.containsKey(right)) {
+                map.put(right, map.get(right) - 1);
+                if (map.get(right) == 0) matched++;
+            }
+```
+This loop iterates through each character in string `s` using the `endWindow` variable as the index. It takes one character at a time from the right end of the window. If the character is present in the `map`, it decrements its frequency by 1 and checks if its frequency becomes 0. If it becomes 0, then it means one character from string `t` has been completely matched, so `matched` variable is incremented.
+
+```java
+            while (matched == map.size()) {
+```
+This `while` loop executes as long as the number of matched characters is equal to the total number of unique characters in string `t`. This means all characters of string `t` are matched within the current window.
+
+```java
+                if (minLen > endWindow - start + 1) {
+                    minLen = endWindow - start + 1;
+                    subStr = start;
+                }
+```
+This code block inside the `while` loop updates the `minLen` and `subStr` variables to store the minimum length of the substring that contains all the characters of string `t` and its starting index.
+
+```java
+                char deleted = s.charAt(start++);
+                if (map.containsKey(deleted)) {
+                    if (map.get(deleted) == 0) matched--;
+                    map.put(deleted, map.get(deleted) + 1);
+                }
+            }
+        }
+```
+In the `while` loop, it removes the character from the left end of the window (`start` index) and updates the `map` accordingly. If the removed character is present in the `map`, it checks if its frequency becomes 0. If it becomes 0, then it means one matched character has been removed from the window, so `matched` variable is decremented.
+
+Finally, after processing all characters in string `s`, the method returns the minimum length substring from the `s` string based on the `minLen` and `subStr` variables. If no substring containing all characters of string `t` is found, it returns an empty string.
+
