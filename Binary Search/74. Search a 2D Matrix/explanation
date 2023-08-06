@@ -1,0 +1,54 @@
+
+```java
+// Similar to binary search in 1D array, here the search space is from (0,0) to (m-1,n-1)
+```
+This is a comment that provides a brief explanation of what the code is intended to do. It mentions that the algorithm is similar to binary search but applied to a 2D array. The search space for the 2D array ranges from (0,0) to (m-1,n-1), where 'm' is the number of rows and 'n' is the number of columns in the matrix.
+
+```java
+class Solution {
+```
+This defines a class named `Solution`. The class encapsulates the solution to the problem that follows.
+
+```java
+    public boolean searchMatrix(int[][] matrix, int target) {
+```
+This line defines a method named `searchMatrix` with two parameters: a 2D array `matrix` and an integer `target`. The return type of this method is `boolean`, indicating that it will return either `true` or `false`.
+
+```java
+        int i = 0, j = matrix[0].length - 1;
+```
+Here, two integer variables `i` and `j` are declared and initialized. `i` is initialized to 0, and `j` is initialized to `matrix[0].length - 1`. This sets `i` to the first row (0th index) and `j` to the last column (length-1 index) of the matrix.
+
+```java
+        while (i < matrix.length && j >= 0) {
+```
+This is the start of a while loop. The loop condition checks if both `i` is less than the number of rows (`matrix.length`) and `j` is greater than or equal to 0. This means the loop will continue as long as `i` is within the valid row indices of the matrix and `j` is within the valid column indices of the matrix.
+
+```java
+            if (matrix[i][j] == target) {
+                return true;
+            } else if (matrix[i][j] > target) {
+                j--;
+            } else {
+                i++;
+            }
+```
+Inside the while loop, three conditions are checked:
+
+1. If the value at the current position `(i, j)` in the matrix is equal to the `target`, the method returns `true`, indicating that the `target` is found in the matrix.
+
+2. If the value at the current position `(i, j)` is greater than the `target`, it means the `target` could only be found in a previous column (towards the left side). So, we decrement `j` to move to the previous column.
+
+3. If the value at the current position `(i, j)` is less than the `target`, it means the `target` could only be found in a subsequent row (towards the bottom). So, we increment `i` to move to the next row.
+
+The loop continues until the `target` is found or until we have explored the entire search space.
+
+```java
+        }
+        return false;
+    }
+```
+This line is outside the while loop, indicating that if the loop terminates without finding the `target`, the method will return `false`, indicating that the `target` is not present in the matrix.
+
+
+That's the explanation of the given Java code. The primary `searchMatrix` method implements a search algorithm similar to binary search to find the target in the given 2D matrix.
