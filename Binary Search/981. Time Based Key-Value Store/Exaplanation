@@ -1,0 +1,64 @@
+
+```java
+class TimeMap {
+
+    HashMap<String, List<Pair<String, Integer>>> store;
+
+    public TimeMap() {
+        store = new HashMap<>();
+    }
+```
+
+In this code snippet, a class named `TimeMap` is defined. It's meant to represent a data structure that associates values with timestamps. The class has an instance variable `store`, which is a HashMap where the keys are strings and the values are lists of pairs. Each pair consists of a string value and an integer timestamp.
+
+The constructor `public TimeMap()` initializes the `store` HashMap when an object of the `TimeMap` class is created.
+
+```java
+    public void set(String key, String value, int timestamp) {
+        if(!store.containsKey(key)){
+            store.put(key, new ArrayList<>());
+        }
+        store.get(key).add(new Pair(value, timestamp));
+    }
+```
+
+The `set` method is used to add a new entry to the TimeMap. It takes three parameters: a `key` (string), a `value` (string), and a `timestamp` (integer). If the `store` HashMap doesn't already contain the given `key`, it creates a new entry with an empty list as its value. Then, it adds a new pair consisting of the `value` and `timestamp` to the list associated with the given `key`.
+
+```java
+    public String get(String key, int timestamp) {
+        if(!store.containsKey(key)){return "";}
+        List<Pair<String, Integer>> list = store.get(key);
+        return binarySearch(list, timestamp);
+    }
+```
+
+The `get` method is used to retrieve a value from the TimeMap given a `key` and a `timestamp`. If the `store` HashMap doesn't contain the given `key`, it immediately returns an empty string. Otherwise, it retrieves the list associated with the `key` and then calls the `binarySearch` method to find the closest value to the given `timestamp`.
+
+```java
+    public String binarySearch(List<Pair<String, Integer>> list, int timestamp){
+        int left = 0;
+        int right = list.size() - 1;
+
+        while(left < right){
+            int mid = left + (right - left + 1) / 2;
+
+            if(list.get(mid).getValue() <= timestamp){
+                left = mid;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return list.get(left).getValue() <= timestamp ? list.get(left).getKey() : "";
+    }
+}
+```
+
+The `binarySearch` method is used to perform a binary search within a list of pairs to find the value closest to the given `timestamp`. The method takes the list of pairs and the target `timestamp` as parameters. It initializes two pointers, `left` and `right`, to perform the binary search.
+
+Inside the while loop, the midpoint `mid` is calculated. If the timestamp associated with the pair at index `mid` is less than or equal to the target `timestamp`, it means this pair's timestamp is the closest valid timestamp so far. In this case, the `left` pointer is moved to `mid`. Otherwise, if the timestamp is greater, the `right` pointer is moved to `mid - 1`.
+
+After the binary search is complete, the method returns the value associated with the pair at the `left` index if its timestamp is less than or equal to the target `timestamp`. Otherwise, it returns an empty string.
+
+The provided code includes a usage example in comments at the end, demonstrating how to create a `TimeMap` object, use the `set` method to add entries, and use the `get` method to retrieve values based on timestamps.
+
+Overall, this code implements a data structure that allows you to store values associated with timestamps and retrieve the nearest valid value to a given timestamp efficiently using binary search.
