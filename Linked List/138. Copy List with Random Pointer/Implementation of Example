@@ -1,0 +1,45 @@
+Absolutely, let's walk through the given example step by step and see how the code works to create a deep copy of the input linked list with random pointers.
+
+Input: head = [[7,null],[13,0],[11,4],[10,2],[1,0]]
+
+The input represents a linked list where each element is an array `[value, randomIndex]`. The `value` represents the node's value, and `randomIndex` represents the index of the node that the `random` pointer points to.
+
+1. We start by creating the original linked list based on the input. Each element's `value` becomes the value of the original node, and `randomIndex` indicates which node it points to in terms of the index in the list.
+
+   Original Linked List (input representation):
+   ```
+   7 -> null
+   13 -> 7
+   11 -> 1
+   10 -> 11
+   1 -> 7
+   ```
+
+2. The first pass through the loop creates a copy of each node in the original linked list and stores them in the `oldToCopy` HashMap. The keys are the original nodes, and the values are their respective copied nodes.
+
+   HashMap (oldToCopy) after the first pass:
+   ```
+   [7 -> 7'], [13 -> 13'], [11 -> 11'], [10 -> 10'], [1 -> 1']
+   ```
+
+   The `'` represents the copied nodes.
+
+3. The second pass through the loop establishes the connections (both `next` and `random` pointers) between the copied nodes based on the information in the `oldToCopy` HashMap.
+
+   After the second pass, the copied linked list looks like this:
+   ```
+   7' -> null
+   13' -> 7'
+   11' -> 1'
+   10' -> 11'
+   1' -> 7'
+   ```
+
+4. Finally, the method returns the head of the copied linked list, which is `7'`.
+
+The output matches the input linked list structure exactly:
+```
+[[7,null],[13,0],[11,4],[10,2],[1,0]]
+```
+
+The key idea behind the code is to create a deep copy of the linked list by iterating twice through the original list. In the first iteration, it creates copies of the nodes and stores them in a HashMap. In the second iteration, it sets the `next` and `random` pointers for each copied node based on the information stored in the HashMap. This ensures that the random pointers are correctly preserved in the copied list.
