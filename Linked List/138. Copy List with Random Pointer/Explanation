@@ -1,0 +1,61 @@
+Absolutely, let's go through the given Java code line by line and understand each part of it in detail:
+
+```java
+// Definition for a Node.
+class Node {
+    int val;
+    Node next;
+    Node random;
+
+    public Node(int val) {
+        this.val = val;
+        this.next = null;
+        this.random = null;
+    }
+}
+```
+This section defines a `Node` class which has three attributes: `val` to hold the value of the node, `next` to point to the next node in the linked list, and `random` to point to any other node in the linked list. The constructor initializes these attributes when a new `Node` object is created.
+
+```java
+class Solution {
+    public Node copyRandomList(Node head) {
+        // require a hashmap because we'll be mapping every single old node to the copy of that node
+        HashMap<Node, Node> oldToCopy = new HashMap<>();
+```
+This is the beginning of the `Solution` class which contains the `copyRandomList` method. It takes the head of the original linked list as a parameter. Here, a `HashMap` named `oldToCopy` is declared. This map will be used to store the mapping between original nodes and their corresponding copy nodes.
+
+```java
+        Node curr = head; // current pointer pointing at the head of the list
+        while(curr != null){
+            // till curr reaches the end of the list
+            // firstly we'll be creating a copy of this node
+            oldToCopy.put(curr, new Node(curr.val));
+            // above we are creating a deep copy of the node and putting it to the copy pointer
+            // NOW we'll take out copy pointer and put it in the hashmap
+            // So, in the hashmap we have to map the old node to the copy of the current node
+            // update the current pointer until it reaches null
+            curr = curr.next;
+        }
+```
+In this section, a loop iterates through the original linked list. For each node `curr` in the original list, a new copy of the node is created with the same value, and it's stored in the `oldToCopy` map with the original node as the key. This loop effectively creates a copy of each node in the original list and populates the `oldToCopy` map.
+
+```java
+        curr = head;
+        while(curr != null){
+            // set pointers
+            // let's get the copy of the node
+            oldToCopy.get(curr).next = oldToCopy.get(curr.next);
+            // now just for the copy node we will set its pointers
+            oldToCopy.get(curr).random = oldToCopy.get(curr.random);
+            // but just in case the current next node is null, then in that situation we will return null
+            curr = curr.next;
+        }
+```
+In this part, another loop iterates through the original linked list again. For each node `curr` in the original list, it sets the `next` and `random` pointers for the corresponding copy node by looking up the nodes in the `oldToCopy` map. If the `next` or `random` of the original node is `null`, it will also set the `next` or `random` of the corresponding copy node to `null`.
+
+```java
+        return oldToCopy.get(head);
+```
+Finally, the method returns the copy of the head of the original linked list by using the `oldToCopy` map to retrieve the corresponding copy node.
+
+This code is essentially creating a deep copy of a linked list with random pointers using a HashMap to keep track of the mapping between original nodes and their copy nodes. This ensures that the random pointers are correctly preserved in the copied list.
