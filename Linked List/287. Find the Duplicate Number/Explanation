@@ -1,0 +1,65 @@
+This code is meant to find a duplicate element in an array of integers using Floyd's Tortoise and Hare algorithm, also known as the cycle detection algorithm
+
+```
+
+1. **Class Declaration:**
+```java
+class Solution {
+```
+This defines a class named `Solution` that encapsulates the solution for the problem.
+
+2. **Method Declaration:**
+```java
+public int findDuplicate(int[] nums) {
+```
+This declares a public method named `findDuplicate` that takes an array of integers (`nums`) as a parameter and returns an integer. The goal of this method is to find and return the duplicate element from the given array.
+
+3. **Variable Declarations:**
+```java
+int slow = 0;
+int fast = 0;
+```
+Two variables, `slow` and `fast`, are declared and initialized to 0. These variables will be used to traverse the array and detect cycles.
+
+4. **Cycle Detection:**
+```java
+while(true){
+    slow = nums[slow];
+    fast = nums[nums[fast]];
+    if(slow == fast){
+        break;
+    }
+}
+```
+This part of the code uses Floyd's Tortoise and Hare algorithm to detect a cycle in the array. The `slow` pointer moves one step at a time, while the `fast` pointer moves two steps at a time. If there is a cycle, these pointers will eventually meet at the same index. The `if` condition checks if the two pointers have met, indicating the presence of a cycle, and the loop is exited.
+
+5. **Duplicate Element Detection:**
+```java
+int slow2 = 0;
+while(true){
+    slow = nums[slow];
+    slow2 = nums[slow2];
+    if(slow == slow2){
+        return slow;
+    }
+}
+```
+After the cycle is detected, this part of the code again uses two pointers, `slow` and `slow2`, both starting from the beginning of the array. Both pointers move one step at a time. When they meet, the meeting point is the start of the cycle, which corresponds to the duplicate element in the original array. The duplicate element is returned as the result.
+
+Let's run an example using the provided input:
+```java
+Input: nums = [3, 1, 3, 4, 2]
+```
+1. Cycle Detection:
+   - `slow` moves: 3 -> 4 -> 2 -> 3 (loops back)
+   - `fast` moves: 3 -> 2 -> 3 (loops back)
+   - They meet at index 2 (value 3), indicating a cycle.
+
+2. Duplicate Element Detection:
+   - `slow` moves: 3 -> 2 -> 3 (loops back)
+   - `slow2` moves: 3 -> 4 -> 2 -> 3 (loops back)
+   - They meet again at index 2 (value 3), which is the duplicate element. So, the method returns 3 as the output.
+
+Output: 3
+
+The code successfully detects and returns the duplicate element in the given array.
