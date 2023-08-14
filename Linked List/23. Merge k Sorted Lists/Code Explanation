@@ -1,0 +1,108 @@
+class Solution2 {
+
+    // This method takes an array of ListNode objects as input and merges them.
+    public ListNode mergeKLists(ListNode[] lists) {
+        int size = lists.length; // Get the total number of lists
+        int interval = 1; // Initialize the interval for merging
+
+        // Perform merging until the interval exceeds the size of the list
+        while (interval < size) {
+            // Merge pairs of lists with the current interval
+            for (int i = 0; i < size - interval; i += 2 * interval) {
+                lists[i] = merge(lists[i], lists[i + interval]); // Merge current list with the next list in line
+            }
+
+            interval *= 2; // Double the interval for the next iteration
+        }
+
+        // Return the merged result, which should be the first list if it exists
+        return size > 0 ? lists[0] : null;
+    }
+
+    // This private method merges two ListNode lists in ascending order
+    private ListNode merge(ListNode l1, ListNode l2) {
+        ListNode dummy = new ListNode(0); // Create a dummy node to start the merged list
+        ListNode curr = dummy; // Create a pointer to traverse the merged list
+
+        // Continue merging until either of the lists becomes empty
+        while (l1 != null && l2 != null) {
+            if (l1.val <= l2.val) { // Compare the values of the current nodes in both lists
+                curr.next = l1; // Attach the current node from l1 to the merged list
+                l1 = l1.next; // Move the pointer in l1 to the next node
+            } else {
+                curr.next = l2; // Attach the current node from l2 to the merged list
+                l2 = l2.next; // Move the pointer in l2 to the next node
+            }
+
+            curr = curr.next; // Move the merged list pointer to the newly added node
+        }
+
+        // Attach the remaining nodes from l1 or l2 to the merged list
+        if (l1 != null) {
+            curr.next = l1;
+        } else {
+            curr.next = l2;
+        }
+
+        // Return the merged list starting from the node after the dummy node
+        return dummy.next;
+    }
+}
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Certainly! The `interval` variable in the provided code plays a crucial role in controlling the process of merging the lists. It determines how many lists are merged in each iteration and gradually increases to ensure efficient merging of all the lists. Let's break down its role step by step:
+
+1. **Initialization:**
+   ```java
+   int interval = 1;
+   ```
+   At the beginning, the `interval` is set to 1. This means that in the initial iteration, each pair of adjacent lists will be merged.
+
+2. **Merging Iterations:**
+   The outer `while` loop runs as long as the `interval` is less than the total number of lists (`size`).
+
+   ```java
+   while (interval < size) {
+       // ...
+   }
+   ```
+
+3. **Merging Pairs of Lists:**
+   Inside the `while` loop, there is an inner `for` loop that iterates over pairs of lists with the current interval.
+
+   ```java
+   for (int i = 0; i < size - interval; i += 2 * interval) {
+       // ...
+   }
+   ```
+
+   The loop increments `i` by `2 * interval` in each iteration. This means that in every iteration of the inner loop, two lists are merged: the `i`-th list and the `i + interval`-th list.
+
+   - When `interval` is 1, this effectively merges adjacent pairs of lists.
+   - As `interval` grows (2, 4, 8, ...), the merging process groups larger pairs of lists together.
+
+4. **Merging and Replacing Lists:**
+   Within the inner `for` loop, the `merge` method is called to merge the current list (`lists[i]`) with the list `lists[i + interval]`. The result of the merge is stored back into `lists[i]`, effectively replacing the original `lists[i]` with the merged list.
+
+   ```java
+   lists[i] = merge(lists[i], lists[i + interval]);
+   ```
+
+5. **Doubling the Interval:**
+   After each iteration of the inner `for` loop, the `interval` is doubled to prepare for the next round of merging. This process continues until the `interval` becomes greater than or equal to the total number of lists.
+
+   ```java
+   interval *= 2;
+   ```
+
+6. **Final Result:**
+   Once the `while` loop finishes, the merged result is stored in the first element of the `lists` array (`lists[0]`). This merged list is the desired output.
+
+   ```java
+   return size > 0 ? lists[0] : null;
+   ```
+
+In summary, the `interval` variable controls the number of lists that are merged together in each iteration. It starts with small intervals to merge adjacent pairs of lists and gradually increases the interval size to merge larger groups of lists. This technique effectively leverages the concept of merge sort to efficiently merge multiple sorted lists into one sorted list.
