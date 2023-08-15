@@ -1,0 +1,21 @@
+Sample Input: head = [1,2,3,4,5], k = 3
+Output: [3,2,1,4,5]
+
+Explanation step by step:
+
+1. Initially, the linked list looks like: `1 -> 2 -> 3 -> 4 -> 5`
+2. The `reverseKGroup` method is called with `head` as the starting node and `k` as 3.
+3. The `dummy` node is created as a placeholder.
+4. The `groupPrev` node is set to `dummy`, and `curr` is set to `head`.
+5. The main loop starts:
+   - The first group to be reversed is `[1, 2, 3]`.
+   - The `Kth` node is set to `3`, and `groupNext` is set to the node after `3`, which is `4`.
+   - The inner loop reverses the group nodes, resulting in `[3, 2, 1]`.
+   - The `groupPrev.next` is updated to `Kth`, linking it to the reversed group.
+   - The `groupPrev` is updated to `1`, which is now the last node of the reversed group.
+6. The loop continues with the next group `[4, 5]`, but since there are less than `k` nodes left, the loop breaks.
+7. The `dummy.next` is returned, which points to the modified head of the linked list after all reversals.
+8. The `main` method creates the input linked list and calls the `reverseKGroup` method.
+9. The output linked list is printed: `3 -> 2 -> 1 -> 4 -> 5 -> null`.
+
+As a result, the linked list `[1, 2, 3, 4, 5]` is reversed in groups of size 3, giving the output `[3, 2, 1, 4, 5]`.
