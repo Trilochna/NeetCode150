@@ -1,0 +1,98 @@
+```java
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+```
+This part is a comment block that provides a definition for a singly-linked list node class named `ListNode`. It defines three constructors for the class, one without arguments, one with a single integer argument, and one with an integer and a `ListNode` argument to create the linked list structure.
+
+```java
+class Solution {
+    public ListNode reverseKGroup(ListNode head, int k) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode groupPrev = dummy;
+        ListNode curr = head;
+```
+Here, a class named `Solution` is defined. Within this class, a method `reverseKGroup` is defined that takes two parameters: `head` (which represents the head node of the linked list) and `k` (which is the group size for reversing). 
+
+1. `dummy` is a new `ListNode` object created with a value of 0. It acts as a dummy or placeholder node to help manage the linked list more easily.
+2. `dummy.next` is set to `head`, which effectively makes `dummy` the predecessor of the actual `head` node.
+3. `groupPrev` is initialized as `dummy`. It's a pointer that will be used to keep track of the node just before the current group of nodes.
+4. `curr` is initialized with `head`. It's used as a pointer to traverse through the linked list nodes.
+
+```java
+while(true){
+    ListNode Kth = getKth(groupPrev, k);
+    if(Kth == null || Kth.equals("")){
+        break;
+    }
+    ListNode groupNext = Kth.next;
+```
+This is the start of a `while` loop that will continue until there are no more groups of size `k` left to reverse. Within each iteration of the loop:
+
+1. `Kth` is assigned the result of the `getKth` method, which retrieves the k-th node from the current position pointed to by `groupPrev`.
+2. The code checks whether `Kth` is `null` or an empty string using `Kth == null || Kth.equals("")`. If `Kth` is `null` or empty, it means there are fewer than `k` nodes left to reverse, so the loop is exited using the `break` statement.
+3. `groupNext` is set to the node that comes after the `Kth` node.
+
+```java
+ListNode prev = Kth.next;
+ListNode next = groupPrev.next;
+
+while(curr != groupNext){
+    ListNode temp = curr.next;
+    curr.next = prev;
+    prev = curr;
+    curr = temp;
+}
+```
+Inside the loop, a sub-loop is used to reverse the group of nodes:
+
+1. `prev` is set to `Kth.next`, which will be used to establish the reverse link.
+2. `next` is set to `groupPrev.next`, which is the first node of the group.
+3. The sub-loop continues until `curr` reaches `groupNext`.
+4. Within the sub-loop:
+   - `temp` stores the next node after `curr`.
+   - `curr.next` is set to `prev`, effectively reversing the direction of the link.
+   - `prev` is updated to `curr`.
+   - `curr` is moved to the next node using `temp`.
+
+```java
+ListNode temp2 = groupPrev.next;
+groupPrev.next = Kth;
+groupPrev = temp2;
+```
+After reversing the group, the main loop updates the links to incorporate the reversed group:
+
+1. `temp2` stores the initial first node of the group.
+2. `groupPrev.next` is set to `Kth`, effectively connecting the `groupPrev` node to the new reversed group.
+3. `groupPrev` is updated to `temp2`, which now becomes the last node of the reversed group.
+
+```java
+return dummy.next;
+}
+```
+After reversing all possible groups, the method returns the `next` node of the `dummy`, which is the modified head of the linked list after all the reversals.
+
+```java
+private ListNode getKth(ListNode curr, int k){
+    while(curr != null && k > 0){
+        curr = curr.next;
+        k--;
+    }
+    return curr;
+}
+```
+This is a private helper method called `getKth`, which takes two parameters: `curr` (a reference node) and `k` (the number of steps to move forward from the `curr` node).
+
+1. The method iterates through the linked list by moving `curr` `k` steps ahead, effectively reaching the k-th node from `curr`.
+2. It decrements `k` with each step.
+3. The method returns the node `k` steps ahead of the `curr` node. If `k` is greater than the remaining nodes, it returns `null`.
+
+This code essentially reverses groups of `k` nodes in a singly-linked list and connects them back to the original list. It's a complex algorithm that involves careful manipulation of pointers to achieve the desired reversal effect.
