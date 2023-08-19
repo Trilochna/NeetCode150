@@ -1,0 +1,70 @@
+```java
+import java.util.*;
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        // Create a list of lists to store the level order traversal result
+        List<List<Integer>> result = new ArrayList<>();
+
+        // Check if the root is null, then return an empty result
+        if (root == null) {
+            return result;
+        }
+
+        // Create a queue to perform level order traversal
+        Queue<TreeNode> qu = new LinkedList<>();
+        qu.add(root);
+
+        // Perform level order traversal
+        while (!qu.isEmpty()) {
+            int levelSize = qu.size(); // Get the number of nodes at the current level
+            List<Integer> levelNodes = new ArrayList<>(); // List to store nodes at the current level
+
+            // Process nodes at the current level
+            for (int i = 0; i < levelSize; i++) {
+                TreeNode temp = qu.poll();
+                levelNodes.add(temp.val); // Add the current node's value to the level list
+
+                // Add left and right children to the queue if they exist
+                if (temp.left != null) {
+                    qu.add(temp.left);
+                }
+                if (temp.right != null) {
+                    qu.add(temp.right);
+                }
+            }
+
+            // Add the list of nodes at the current level to the result
+            result.add(levelNodes);
+        }
+
+        // Return the final level order traversal result
+        return result;
+    }
+}
+```=========================================================
+
+Explanation:
+1. We create a list of lists called `result` to store the level order traversal result.
+2. If the `root` is null, we immediately return an empty result.
+3. We create a queue `qu` to perform level order traversal.
+4. We enter a loop to process each level of the tree. We determine the number of nodes in the current level using the `levelSize` variable.
+5. Inside the loop, we create a list `levelNodes` to store the nodes at the current level.
+6. We process each node in the current level, add its value to `levelNodes`, and enqueue its left and right children if they exist.
+7. After processing all nodes in the current level, we add the `levelNodes` list to the `result` list.
+8. Finally, we return the `result` list containing the complete level order traversal of the binary tree.
