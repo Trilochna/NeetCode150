@@ -1,0 +1,60 @@
+This code is used to determine whether a given binary tree is balanced or not. A balanced binary tree is a tree in which the heights of the two subtrees of any node never differ by more than 1.
+
+```java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+```
+This is the definition of the `TreeNode` class, which is used to represent a node in a binary tree. It has an integer value (`val`) and references to its left and right child nodes.
+
+```java
+class Solution {
+    public boolean isBalanced(TreeNode root) {
+        return dfs(root).getKey();
+    }
+```
+The `Solution` class contains the `isBalanced` method, which takes a `TreeNode` named `root` as a parameter and returns a boolean indicating whether the tree rooted at `root` is balanced or not. It does this by calling the `dfs` (depth-first search) method and accessing the boolean value of the returned `Pair` using `getKey()`.
+
+```java
+    public Pair<Boolean, Integer> dfs(TreeNode root){
+        if(root == null) {
+            return new Pair<Boolean, Integer>(true, 0);
+        }
+```
+The `dfs` method is a recursive function that checks whether the binary tree rooted at the given `root` is balanced. If the `root` node is `null`, meaning it's an empty subtree, the function returns a new `Pair` with `true` indicating it's balanced and `0` indicating the height of this empty subtree.
+
+```java
+        var left = dfs(root.left);
+        var right = dfs(root.right);
+```
+Here, the `dfs` function is recursively called on the left and right child nodes of the current `root` node, and their results are stored in the `left` and `right` variables.
+
+```java
+        var balanced = left.getKey() && right.getKey() && (Math.abs(left.getValue() - right.getValue()) <= 1);
+```
+This line calculates whether the current node's subtree is balanced based on the following conditions:
+- `left.getKey()` and `right.getKey()` check if the left and right subtrees are balanced.
+- `(Math.abs(left.getValue() - right.getValue()) <= 1)` checks if the difference in heights of the left and right subtrees is less than or equal to 1.
+
+If all these conditions are met, then the `balanced` variable will be `true`.
+
+```java
+        return new Pair<Boolean, Integer>(balanced, 1 + Math.max(left.getValue(), right.getValue()));
+    }
+}
+```
+Finally, the `dfs` function returns a new `Pair` where the boolean value indicates whether the subtree rooted at the current `root` is balanced, and the integer value represents the height of the current subtree. The height is calculated as `1 + Math.max(left.getValue(), right.getValue())`, which takes the maximum height between the left and right subtrees and adds `1` to account for the current node.
+
+Overall, this code uses a depth-first search approach to recursively check the balance of the binary tree. The heights of the left and right subtrees are calculated, and the balance condition is checked at each node. The result is a boolean indicating whether the entire tree is balanced or not.
