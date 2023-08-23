@@ -1,0 +1,49 @@
+Input:
+```plaintext
+root = [3,4,5,1,2]
+subRoot = [4,1,2]
+```
+
+To better visualize the trees, let's represent them in a structured format:
+
+Root Tree:
+```
+    3
+   / \
+  4   5
+ / \
+1   2
+```
+
+SubRoot Tree:
+```
+  4
+ / \
+1   2
+```
+
+Now, we'll walk through the process of checking if the `subRoot` tree is a subtree of the `root` tree using the given code.
+
+1. Call `isSubtree(root, subRoot)`:
+    - `root` is `[3,4,5,1,2]`
+    - `subRoot` is `[4,1,2]`
+
+2. Inside `isSubtree`:
+    - `subRoot` is not `null`, and it's not the same as `root`, so we proceed.
+    - `root` is not `null`.
+
+3. Recurse into `isSubtree(root.left, subRoot)`:
+    - `root.left` is `[4,1,2]`
+    - `subRoot` is `[4,1,2]`
+
+4. Inside `isSubtree`:
+    - `subRoot` is not `null`, and it's the same as `root.left`, so we return `true`.
+
+The result is `true`, indicating that the `subRoot` tree is indeed a subtree of the `root` tree.
+
+So, the output is:
+```plaintext
+Output: true
+```
+
+The given code checks the structure and values of nodes in the trees through recursion, and in this case, it correctly identifies that the `subRoot` tree is a subtree of the `root` tree.
