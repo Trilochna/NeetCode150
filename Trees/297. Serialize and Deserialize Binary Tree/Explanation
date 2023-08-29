@@ -1,0 +1,75 @@
+
+```java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+```
+This section of code includes a comment that defines a TreeNode class representing nodes of a binary tree. Each node has an integer value (`val`) and references to its left and right children nodes.
+
+```java
+public class Codec {
+    private int i; // global variable used for deserialize
+```
+The `Codec` class is defined, which will provide methods to serialize and deserialize binary trees. It includes a private integer variable `i`, which will be used as a pointer during deserialization.
+
+```java
+public String serialize(TreeNode root) {
+    List<String> result = new ArrayList<>();
+    serializeDFS(root, result);
+    return String.join(",", result);       
+}
+```
+The `serialize` method takes a `TreeNode` as input and returns its serialized representation as a comma-separated string. It creates an empty list called `result` to store the serialized values and then calls the `serializeDFS` helper method to perform a Depth-First Search (DFS) traversal of the binary tree and populate the `result` list with node values.
+
+```java
+public void serializeDFS(TreeNode root, List<String> result){
+    if(root == null){
+        result.add("N");
+        return;
+    }
+    result.add(String.valueOf(root.val));
+    serializeDFS(root.left, result);
+    serializeDFS(root.right, result);
+}
+```
+The `serializeDFS` helper method performs a DFS traversal of the binary tree. If the current node is `null`, it adds "N" (indicating a null node) to the `result` list. Otherwise, it converts the integer value of the current node to a string and adds it to the `result` list. It then recursively calls itself for the left and right children of the current node.
+
+```java
+public TreeNode deserialize(String data) {
+    String[] result = data.split(",");
+    return deserializeDFS(result);        
+}
+```
+The `deserialize` method takes a serialized string as input and returns the corresponding binary tree. It splits the input string by commas to obtain an array of node values and then calls the `deserializeDFS` helper method to construct the binary tree.
+
+```java
+public TreeNode deserializeDFS(String[] result){
+    String rootNode = result[this.i];
+    if(rootNode.equals("N")){
+        this.i++;
+        return null;
+    }
+    var node = new TreeNode(Integer.parseInt(rootNode));
+    this.i++;
+    node.left = deserializeDFS(result);
+    node.right = deserializeDFS(result);
+    return node;
+}
+```
+The `deserializeDFS` helper method constructs a binary tree using a recursive approach. It uses the `i` pointer to access the values from the `result` array. If the current node value is "N," indicating a null node, it increments the pointer and returns `null`. Otherwise, it creates a new `TreeNode` with the integer value obtained from the array. It then increments the pointer and recursively calls itself to construct the left and right subtrees for the current node.
+
+```java
+// Your Codec object will be instantiated and called as such:
+// Codec ser = new Codec();
+// Codec deser = new Codec();
+// TreeNode ans = deser.deserialize(ser.serialize(root));
+```
+This comment provides an example of how to use the `Codec` class. It demonstrates how to create an instance of the `Codec` class (`ser` and `deser`) and use it to serialize and deserialize a binary tree.
+
+In summary, this Java code defines a `Codec` class that provides methods to serialize and deserialize binary trees using Depth-First Search (DFS). The `serialize` method converts a binary tree to a comma-separated string, and the `deserialize` method constructs a binary tree from a serialized string. The helper methods `serializeDFS` and `deserializeDFS` handle the recursive traversal and construction of the binary tree.
