@@ -1,0 +1,154 @@
+```java
+class WordDictionary {
+```
+This line declares the start of a Java class named `WordDictionary`.
+
+```java
+    class TrieNode{
+```
+Within the `WordDictionary` class, another inner class named `TrieNode` is declared. This class represents a node in a Trie data structure.
+
+```java
+        public TrieNode[] children;
+```
+Each `TrieNode` has an array of `children` representing the next possible characters in a word.
+
+```java
+        public boolean endOfWord;
+```
+This boolean field `endOfWord` indicates whether the node represents the end of a valid word.
+
+```java
+        public TrieNode(){
+```
+This is the constructor for the `TrieNode` class, which initializes the `children` array with 26 slots (representing the lowercase English alphabet) and sets `endOfWord` to `false`.
+
+```java
+            children = new TrieNode[26];
+            for(int i = 0; i < 26; i++){
+                children[i] = null;
+            }
+            endOfWord = false;
+        }
+    }
+```
+This block of code inside the `TrieNode` constructor initializes each element of the `children` array to `null` and sets `endOfWord` to `false` for each node.
+
+```java
+    TrieNode root;
+```
+This line declares an instance variable `root` of type `TrieNode` to represent the root of the Trie.
+
+```java
+    public WordDictionary() {
+        root = new TrieNode();
+    }
+```
+This is the constructor for the `WordDictionary` class. It creates a new instance of the `TrieNode` class to serve as the root of the Trie.
+
+```java
+    public void addWord(String word) {
+```
+This method, `addWord`, is used to add a word to the Trie. It takes a `String` parameter `word`, which is the word to be added.
+
+```java
+        TrieNode curr = root;
+```
+A local variable `curr` of type `TrieNode` is initialized to `root`. This variable will be used to traverse the Trie while adding the word.
+
+```java
+        for(int i = 0; i < word.length(); i++){
+```
+A loop iterates through each character of the input `word`.
+
+```java
+            int index = word.charAt(i) - 'a';
+```
+For each character, an index is calculated by subtracting the ASCII value of 'a' from the character's ASCII value. This index is used to access the corresponding child node in the `curr` node's `children` array.
+
+```java
+            if(curr.children[index] == null){
+                curr.children[index] = new TrieNode();
+            }
+```
+If the child node at the calculated index is `null`, it means that this character has not been encountered before. In such a case, a new `TrieNode` is created and assigned to the `children` array at the calculated index.
+
+```java
+            curr = curr.children[index];
+```
+The `curr` pointer is then moved to the newly created child node for the next iteration.
+
+```java
+        }
+        curr.endOfWord = true;
+```
+After processing all characters in the word, the `endOfWord` flag of the last node (representing the end of the word) is set to `true`.
+
+```java
+    }
+    
+    public boolean search(String word) {
+```
+This method, `search`, is used to search for a word in the Trie. It takes a `String` parameter `word`, which is the word to be searched.
+
+```java
+        return searchHelper(word, root, 0);
+```
+The `search` method calls a helper method `searchHelper` with the `word`, starting from the `root` of the Trie and an initial `index` of 0. The result of the search is returned.
+
+```java
+    }
+
+    public boolean searchHelper(String word, TrieNode curr, int index){
+```
+This is the `searchHelper` method. It takes three parameters: the `word` to search, the current `TrieNode` being examined (`curr`), and the current `index` representing the position in the `word` being considered.
+
+```java
+        if(index == word.length()){
+```
+This condition checks if the `index` has reached the length of the `word`. If so, it means we have successfully matched all characters in the word, and we check if the `endOfWord` flag is set in the current node.
+
+```java
+            return curr.endOfWord;
+```
+If the `endOfWord` flag is set, it indicates that the word exists in the Trie, and `true` is returned. Otherwise, `false` is returned.
+
+```java
+        }
+        char c = word.charAt(index);
+```
+If the `index` is not equal to the length of the word, we retrieve the character at that index in the `word`.
+
+```java
+        if(c == '.'){
+```
+If the character is a dot ('.'), it's treated as a wildcard, and we need to search all possible children of the current node.
+
+```java
+            for(TrieNode temp : curr.children){
+                if(temp != null && searchHelper(word, temp, index + 1)){
+                    return true;
+                }
+            }
+            return false;
+        } else{
+```
+If the character is not a dot, we calculate an index for that character based on its ASCII value relative to 'a'.
+
+```java
+                int idx = c - 'a';
+                if(curr.children[idx] == null){
+                    return false;
+            }
+```
+We check if the child node corresponding to the character exists. If it doesn't, the word is not in the Trie, and we return `false`.
+
+```java
+            return searchHelper(word, curr.children[idx], index + 1);
+        }
+    }
+}
+```
+Finally, if the character is a valid letter, we move to the corresponding child node and recursively call `searchHelper` with the updated `index`.
+
+This entire class `WordDictionary` represents a data structure known as a Trie (prefix tree) specifically designed for storing and searching words. It allows you to add words and search for words, including support for wildcard searches using the dot ('.') character. The Trie structure efficiently stores and retrieves words, making it useful for applications like word dictionaries or word search games.
