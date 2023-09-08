@@ -22,3 +22,5 @@ public class Main
 		printPermutation(str, "", 0);
 	}
 }
+
+
