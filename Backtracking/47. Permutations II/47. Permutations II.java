@@ -4,7 +4,7 @@ class Solution {
         List<Integer> perm = new ArrayList<>();
         HashMap<Integer, Integer> count = new HashMap<>();
         for(int num : nums){ // for incrementing count of numbers occuring/duplicates
-            count.put(num, count.getOrDefault(num, 0) + 1);
+            count.put(num, count.getOrDefault(num, 0) + 1); 
         }
         dfsBacktrack(result, nums, perm, count);
         return result;
