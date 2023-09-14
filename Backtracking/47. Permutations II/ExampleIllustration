@@ -1,0 +1,82 @@
+Sure, let's walk through the implementation of the code step by step using the input `nums = [1, 1, 2]`:
+
+1. We start with an empty result list and an empty permutation list:
+
+   `result = []`
+   `perm = []`
+
+2. We create a `count` HashMap to count the frequency of each number in `nums`:
+
+   `count = {1: 2, 2: 1}`
+
+3. We call the `dfsBacktrack` function with these initial values:
+
+   ```
+   dfsBacktrack(result, nums, perm, count)
+   ```
+
+4. Inside the `dfsBacktrack` function, we first check if the size of `perm` is equal to the length of `nums`. If it is, we add a copy of `perm` to the `result` list and return. Since `perm` is empty initially, we don't add anything to the result yet.
+
+5. We enter the loop to generate permutations. The loop iterates through the keys of the `count` HashMap:
+
+   - First iteration (num = 1):
+     - We check if `count.get(1)` (the count of 1) is greater than 0. It is, so we proceed.
+     - We add `1` to `perm` and decrement the count of 1 in `count`. `perm` becomes `[1]`, and `count` becomes `{1: 1, 2: 1}`.
+     - We recursively call `dfsBacktrack` with the updated values.
+
+   - Inside the recursive call:
+     - The size of `perm` (which is `[1]`) is not equal to the length of `nums`, so we continue the loop.
+
+   - Second iteration (num = 2):
+     - We check if `count.get(2)` (the count of 2) is greater than 0. It is, so we proceed.
+     - We add `2` to `perm` and decrement the count of 2 in `count`. `perm` becomes `[1, 2]`, and `count` becomes `{1: 1, 2: 0}`.
+     - We recursively call `dfsBacktrack` with the updated values.
+
+   - Inside the recursive call:
+     - The size of `perm` (which is `[1, 2]`) is equal to the length of `nums`, so we add a copy of `perm` (`[1, 2]`) to the `result` list.
+
+   - After the recursive call, we backtrack by incrementing the count of 2 in `count` and removing the last element from `perm`. `perm` becomes `[1]` again, and `count` becomes `{1: 1, 2: 1}`.
+
+6. We continue the loop in the original call to `dfsBacktrack`.
+
+   - Third iteration (num = 1):
+     - We check if `count.get(1)` (the count of 1) is greater than 0. It is, so we proceed.
+     - We add `1` to `perm` and decrement the count of 1 in `count`. `perm` becomes `[1, 1]`, and `count` becomes `{1: 0, 2: 1}`.
+     - We recursively call `dfsBacktrack` with the updated values.
+
+   - Inside the recursive call:
+     - The size of `perm` (which is `[1, 1]`) is equal to the length of `nums`, so we add a copy of `perm` (`[1, 1]`) to the `result` list.
+
+   - After the recursive call, we backtrack by incrementing the count of 1 in `count` and removing the last element from `perm`. `perm` becomes `[1, 2]` again, and `count` becomes `{1: 1, 2: 1}`.
+
+7. We continue the loop in the original call to `dfsBacktrack`.
+
+   - Fourth iteration (num = 2):
+     - We check if `count.get(2)` (the count of 2) is greater than 0. It is, so we proceed.
+     - We add `2` to `perm` and decrement the count of 2 in `count`. `perm` becomes `[1, 2, 2]`, and `count` becomes `{1: 1, 2: 0}`.
+     - We recursively call `dfsBacktrack` with the updated values.
+
+   - Inside the recursive call:
+     - The size of `perm` (which is `[1, 2, 2]`) is equal to the length of `nums`, so we add a copy of `perm` (`[1, 2, 2]`) to the `result` list.
+
+   - After the recursive call, we backtrack by incrementing the count of 2 in `count` and removing the last element from `perm`. `perm` becomes `[1, 2]` again, and `count` becomes `{1: 1, 2: 1}`.
+
+8. We finish the loop in the original call to `dfsBacktrack` for the first iteration (num = 1).
+
+9. We continue the loop in the original call to `dfsBacktrack` for the second iteration (num = 2).
+
+10. We finish the loop in the original call to `dfsBacktrack` for the third iteration (num = 1).
+
+11. The `dfsBacktrack` function returns to the original call, and we have generated all unique permutations.
+
+12. The `result` list now contains the following unique permutations:
+
+   ```
+   [
+     [1, 1, 2],
+     [1, 2, 1],
+     [2, 1, 1]
+   ]
+   ```
+
+These are all the unique permutations of the input `nums = [1, 1, 2]` as required.
