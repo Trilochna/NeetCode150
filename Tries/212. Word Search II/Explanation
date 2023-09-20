@@ -1,0 +1,24 @@
+Here's a summary of what this code does:
+
+It defines a Solution class containing a nested Trie class.
+The findWords method initializes a Trie with given words, iterates through the board using a depth-first search (dfs) to find valid words, and returns a list of unique valid words.
+The dfs method performs a depth-first search on the board starting from a given cell (r, c) and a Trie node. It recursively explores neighboring cells, constructing words as it goes. When a valid word is found, it's added to the result set.
+The Trie class is used to store words efficiently. It has methods to add and remove words, as well as track references to nodes.
+This code effectively solves the word search problem on a given board of characters using a Trie for efficient word lookup and DFS for exploring the board. It returns a list of words found on the board that exist in the given list of words.
+
+
+======================================================================
+
+In the provided Java code, the line "If current node's reference count is less than 1" is part of a conditional check in the `dfs` (Depth-First Search) method. Let me explain its significance:
+
+In the code, a `Trie` data structure is used to efficiently store and manage words. Each node in the `Trie` represents a character in a word, and it has several attributes, including `refs`, which stands for references.
+
+- When a word is added to the `Trie`, each node along the path representing that word increments its `refs` count by 1.
+- When a word is removed from the `Trie`, each node along the path representing that word decrements its `refs` count by 1.
+- The `refs` count is used to keep track of how many times a particular character is part of different words in the `Trie`.
+
+The condition "If current node's reference count is less than 1" is a check to see if the current node in the `Trie` is no longer part of any word. If `refs` is less than 1, it means that this character is not the end of any word in the `Trie`.
+
+In the context of the DFS traversal on the board, this check is used to optimize the traversal and prune branches of the search tree when a character on the board does not lead to a valid word in the `Trie`. If the current node's `refs` count is less than 1, it indicates that continuing the search in that direction won't lead to a valid word, so the code returns early and backtracks to explore other paths.
+
+This check helps improve the efficiency of the word search algorithm by avoiding unnecessary exploration of paths that cannot lead to valid words.
