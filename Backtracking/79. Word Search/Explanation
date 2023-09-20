@@ -1,0 +1,26 @@
+The given Java code is an implementation of a word search problem on a 2D grid, where the goal is to determine if a given word can be formed by traversing adjacent cells in the grid. The code uses a backtracking approach similar to the "Number of Islands" problem.
+
+Here's a breakdown of the code:
+
+1. The `exist` method is the entry point for solving the problem. It takes a 2D character array `board` representing the grid and a String `word` that needs to be searched for within the grid. It returns `true` if the word can be found in the grid and `false` otherwise.
+
+2. The `check` method is a recursive helper function used to explore the grid to find the word. It takes the following parameters:
+   - `board`: The 2D character array representing the grid.
+   - `word`: The target word we are searching for.
+   - `i` and `j`: The current coordinates in the grid.
+   - `m` and `n`: The dimensions of the grid.
+   - `cur`: The current index in the `word` string that we are trying to match.
+
+3. The base case for the recursion is when `cur` reaches or exceeds the length of the `word`. This means we have successfully matched the entire word, and we return `true`.
+
+4. The next condition checks whether the current coordinates `(i, j)` are valid. If they are out of bounds or the character in the `board` at `(i, j)` does not match the character at index `cur` in the `word`, we return `false`.
+
+5. If the character at `(i, j)` matches the character at index `cur` in the `word`, we temporarily modify the character at `(i, j)` by adding 100 to its ASCII value. This is done to mark the character as visited so that we don't revisit it during the search.
+
+6. We then recursively call the `check` method on the adjacent cells (up, down, left, right) to see if any of these paths lead to a successful match for the rest of the word. We increment `cur` by 1 for the recursive calls.
+
+7. After exploring all possible paths from `(i, j)` with the current character, we backtrack by subtracting 100 from the character's ASCII value to restore its original value. This is important because we want to allow other paths to explore this cell later if needed.
+
+8. Finally, we return the result of the `exist` variable, which indicates whether a valid path was found to match the word.
+
+The code iterates through all cells in the grid and checks if any of them can be the starting point for the word search. If any starting point results in a successful search, the `exist` method returns `true`, indicating that the word can be formed in the grid. Otherwise, it returns `false`.
