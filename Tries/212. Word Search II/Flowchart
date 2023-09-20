@@ -1,0 +1,86 @@
+Start
+
+   |
+   v
+Initialize Trie (root)
+
+   |
+   v
+For each word in words:
+   |
+   v
+   Add word to Trie (root)
+
+   |
+   v
+Set ROWS and COLS based on board dimensions
+
+   |
+   v
+Initialize empty HashSet res (result)
+Initialize empty HashSet visit (visited cells)
+
+   |
+   v
+For each row (r) from 0 to ROWS:
+   |
+   | For each column (c) from 0 to COLS:
+   |   |
+   |   v
+   |   Call DFS starting from (r, c)
+   |   |
+   |   v
+   |   Continue iterating through columns
+   |
+   v
+   Continue iterating through rows
+
+   |
+   v
+Convert HashSet res to ArrayList and return as the result
+
+DFS (Depth-First Search):
+   |
+   v
+Check base cases:
+   |
+   | - If out of bounds (r < 0, c < 0, r >= ROWS, c >= COLS)
+   | - If current node does not have the character at (r, c)
+   | - If current node's reference count is less than 1
+   | - If cell (r, c) is already visited
+   |
+   |
+   v
+   If any base case met, return
+
+   |
+   v
+   Mark cell (r, c) as visited
+
+   |
+   v
+   Move to the next Trie node corresponding to the character at (r, c)
+
+   |
+   v
+   Append the character at (r, c) to the current word
+
+   |
+   v
+   If the current node represents a valid word:
+   |   |
+   |   v
+   |   Mark the node as not representing a word
+   |   Add the current word to the result set (res)
+   |   Remove the word from the Trie (root)
+
+   |
+   | For each neighboring cell (up, down, left, right):
+   |   |
+   |   v
+   |   Recursively call DFS on the neighboring cell
+   |
+   v
+   Mark cell (r, c) as unvisited (backtrack)
+
+End
